@@ -1,0 +1,48 @@
+{
+  "name": "github_Test",
+  "appVersion": "c1999b93-32ab-11ee-9305-8ab58bb3ab2b",
+  "description": "Data Pipeline Application",
+  "change": {
+    "author": "cdap",
+    "creationTimeMillis": 1691142376410,
+    "latest": true
+  },
+  "configuration": "{\"resources\":{\"memoryMB\":2048.0,\"virtualCores\":1.0},\"driverResources\":{\"memoryMB\":2048.0,\"virtualCores\":1.0},\"connections\":[{\"from\":\"GCS\",\"to\":\"BigQuery\"}],\"comments\":[],\"postActions\":[],\"properties\":{},\"processTimingEnabled\":true,\"stageLoggingEnabled\":false,\"stages\":[{\"name\":\"GCS\",\"plugin\":{\"name\":\"GCSFile\",\"type\":\"batchsource\",\"label\":\"GCS\",\"artifact\":{\"name\":\"google-cloud\",\"version\":\"0.22.1\",\"scope\":\"SYSTEM\"},\"properties\":{\"useConnection\":\"true\",\"connection\":\"${conn(Cloud Storage Default)}\",\"referenceName\":\"gparini_dataform_test.studente_df.csv\",\"path\":\"gs://gparini_dataform_test/studente_df.csv\",\"format\":\"csv\",\"sampleSize\":\"1000\",\"enableQuotedValues\":\"false\",\"skipHeader\":\"true\",\"filenameOnly\":\"false\",\"recursive\":\"false\",\"ignoreNonExistingFolders\":\"false\",\"encrypted\":\"false\",\"fileEncoding\":\"UTF-8\",\"schema\":\"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"text\\\",\\\"fields\\\":[{\\\"name\\\":\\\"body_0\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_1\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_2\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_3\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_4\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_5\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_6\\\",\\\"type\\\":\\\"string\\\"}]}\"}},\"outputSchema\":\"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"text\\\",\\\"fields\\\":[{\\\"name\\\":\\\"body_0\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_1\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_2\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_3\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_4\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_5\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_6\\\",\\\"type\\\":\\\"string\\\"}]}\",\"id\":\"GCS\"},{\"name\":\"BigQuery\",\"plugin\":{\"name\":\"BigQueryTable\",\"type\":\"batchsink\",\"label\":\"BigQuery\",\"artifact\":{\"name\":\"google-cloud\",\"version\":\"0.22.1\",\"scope\":\"SYSTEM\"},\"properties\":{\"useConnection\":\"true\",\"connection\":\"${conn(BigQuery Default)}\",\"dataset\":\"gparini_dataform\",\"table\":\"datafusion_test\",\"operation\":\"insert\",\"truncateTable\":\"false\",\"allowSchemaRelaxation\":\"false\",\"location\":\"EU\",\"createPartitionedTable\":\"false\",\"partitioningType\":\"TIME\",\"partitionFilterRequired\":\"false\",\"schema\":\"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"text\\\",\\\"fields\\\":[{\\\"name\\\":\\\"body_0\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_1\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_2\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_3\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_4\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_5\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_6\\\",\\\"type\\\":\\\"string\\\"}]}\"}},\"outputSchema\":\"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"text\\\",\\\"fields\\\":[{\\\"name\\\":\\\"body_0\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_1\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_2\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_3\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_4\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_5\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_6\\\",\\\"type\\\":\\\"string\\\"}]}\",\"inputSchema\":[{\"name\":\"GCS\",\"schema\":\"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"text\\\",\\\"fields\\\":[{\\\"name\\\":\\\"body_0\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_1\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_2\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_3\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_4\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_5\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"body_6\\\",\\\"type\\\":\\\"string\\\"}]}\"}],\"id\":\"BigQuery\"}],\"schedule\":\"0 1 */1 * *\",\"engine\":\"spark\",\"numOfRecordsPreview\":100.0,\"rangeRecordsPreview\":{\"min\":1.0,\"max\":\"5000\"},\"maxConcurrentRuns\":1.0}",
+  "datasets": [],
+  "programs": [
+    {
+      "type": "Spark",
+      "app": "github_Test",
+      "name": "phase-1",
+      "description": "Sources \u0027GCS\u0027 to sinks \u0027BigQuery\u0027."
+    },
+    {
+      "type": "Workflow",
+      "app": "github_Test",
+      "name": "DataPipelineWorkflow",
+      "description": "Data Pipeline Workflow"
+    }
+  ],
+  "plugins": [
+    {
+      "id": "BigQuery",
+      "name": "BigQueryTable",
+      "type": "batchsink"
+    },
+    {
+      "id": "GCS",
+      "name": "GCSFile",
+      "type": "batchsource"
+    },
+    {
+      "id": "GCS:csv",
+      "name": "csv",
+      "type": "validatingInputFormat"
+    }
+  ],
+  "artifact": {
+    "name": "cdap-data-pipeline",
+    "version": "6.9.1",
+    "scope": "SYSTEM"
+  }
+}
